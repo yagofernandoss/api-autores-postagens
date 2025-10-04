@@ -44,5 +44,33 @@ export default class AutorControlador {
         return res.status(201).json(autor)
     }
 
+    editar(req: Request, res: Response){
+        //buscar o autor que vai ser editado e alterar o nome e a idade do autor
+        const {id} = req.params
+
+        const {nome,idade} = req.body
+
+        if(!nome || !idade){
+            return res.status(400).json({
+                mensagem: 'O Nome e a Idade, são obrigatórios'
+            })
+        }
+
+        const autor = autores.find((elemento) => {
+            return elemento.id === id 
+        } )
+
+        if(!autor){
+            return res.status(404).json({
+                mensagem: "Autor não encontrado"
+            })
+        }
+
+        autor.nome = nome
+        autor.idade = idade
+
+        return res.status(204).send()
+    }
+
     
 }
