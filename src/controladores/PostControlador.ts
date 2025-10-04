@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { autores, posts } from "../modelos/Bancodedados";
-import Autor from "../modelos/Autor";
 import Post from "../modelos/Post";
 
 
