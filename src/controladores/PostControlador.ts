@@ -32,9 +32,7 @@ export default class PostControlador {
        if(!titulo || !descricao || !autor_id){
         return res.status(400).json({
             mensagem: 'O Título, Descrição e Autor são obrigatórios'
-
         })
-        
        }
        const autor = autores.find ((elemento) => {
         return elemento.id === autor_id
@@ -58,6 +56,12 @@ export default class PostControlador {
     editar(req: Request, res: Response){
       const {id} = req.params
       const {titulo, descricao} = req.body
+
+         if(!titulo || !descricao){
+        return res.status(400).json({
+            mensagem: 'O Título e Descrição são obrigatórios'
+        })
+       }      
 
       const post = posts.find((elemento)=>{
             return elemento.id === id
