@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { autores, posts } from "../modelos/Bancodedados";
 import Autor from "../modelos/Autor";
+import Post from "../modelos/Post";
 
 
 
@@ -26,8 +27,29 @@ export default class PostControlador {
     }
 
     cadastrar(req: Request, res: Response){
-       
+       const {titulo, descricao,autor_id} = req.body
 
+       if(!titulo || !descricao || !autor_id){
+        return res.status(400).json({
+            mensagem: 'O Título, Descrição e Autor são obrigatórios'
+
+        })
+        
+       }
+       const autor = autores.find ((elemento) => {
+        return elemento.id === autor_id
+       })
+       if(!autor){
+        return res.status(404).json({
+            mensagem: 'O autor não existe'
+        })
+       }
+       const post = new Post({
+        titulo,
+        descricao,
+        autor
+       })
+       return res.status(201).json(post)
         
     }
 
